@@ -75,10 +75,10 @@ public class FitAction extends BaseAction {
                 }
                 try {
                     t = t.replaceFirst("url=", "");
-                    t = URLDecoder.decode(t);
+                    t = URLDecoder.decode(t, "UTF-8");
                     t = t.replaceFirst("http://", "");
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    log.error("Could not decode url", e);
                 }
                 //cmds.add("wkhtmltopdf \"" + t + "\" - " +getOptions());
                 cmds.add("wkhtmltopdf \"" + t + "\" " + tempfile + " " + getOptions());
@@ -198,7 +198,11 @@ public class FitAction extends BaseAction {
      * @return the options
      */
     public String getOptions() {
-        return UrlDecoder.decode(options);
+        try{
+            return URLDecoder.decode(options, "UTF-8");
+        }catch(IOException e){
+            return options;
+        }
     }
 
     /**
