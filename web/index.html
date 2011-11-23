@@ -1,0 +1,40 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>pdf'er</title>
+    </head>
+    <body>
+        <pre>
+Description
+    Have a web page but need a PDF? Use pdf'er to pdf'it!
+    pdf'er is a web service wrapper to wkhtmltopdf http://code.google.com/p/wkhtmltopdf/
+
+Usage
+    ~/fit?url=www.google.com
+
+Parameters
+    url - webpage URL
+    html_inner - innerHTML, if present URL param is ignored
+    html_head - (optional) defaults to &lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body&gt;
+    html_foot - (optional) defaults to &lt;/body&gt;&lt;/html&gt;
+    file - (optional) output filename, defaults to "report.pdf"
+    options - (optional) string of options supported by wkhtmltopdf
+
+Example
+    <a href="fit?url=www.google.com">fit?url=www.google.com</a>
+        </pre>
+  <a href="test.jsp">test page</a>
+
+ <script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try{
+var pageTracker = _gat._getTracker("UA-xxxxxx-x");
+pageTracker._trackPageview();
+} catch(err) {}
+</script>
+    </body>
+</html>

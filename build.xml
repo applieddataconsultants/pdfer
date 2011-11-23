@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- You may freely edit this file. See commented blocks below for -->
+<!-- some examples of how to customize the build. -->
+<!-- (If you delete it and reopen the project it will be recreated.) -->
+<!-- By default, only the Clean and Build commands use this build script. -->
+<!-- Commands such as Run, Debug, and Test only use this build script if -->
+<!-- the Compile on Save feature is turned off for the project. -->
+<!-- You can turn off the Compile on Save (or Deploy on Save) setting -->
+<!-- in the project's Project Properties dialog box.-->
+<project name="pdfer" default="default" basedir=".">
+    <description>Builds, tests, and runs the project pdfer.</description>
+    <import file="nbproject/build-impl.xml"/>
+    <target name="adc-live-deploy">
+        <antcall target="do-clean"/>
+        <antcall target="do-dist"/>
+        <taskdef name="deploy" classname="org.apache.catalina.ant.DeployTask"
+            classpath="${basedir}/lib/ant-depl/catalina-ant.jar"/>
+        <deploy url="http://172.25.20.113:8080/manager" username="tomcat" password="tomcat"
+            path="/pdfer" war="file:${basedir}/dist/pdfer.war" update="true"/>
+        <deploy url="http://172.25.20.114:8080/manager" username="tomcat" password="tomcat"
+            path="/pdfer" war="file:${basedir}/dist/pdfer.war" update="true"/>
+    </target>
+</project>

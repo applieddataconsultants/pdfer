@@ -1,0 +1,2 @@
+This app is a simple wrapper to wkhtmltopdf (http://code.google.com/p/wkhtmltopdf/).
+Make sure that wkhtmltopdf is available on your webserver.
