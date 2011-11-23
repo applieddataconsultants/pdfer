@@ -70,7 +70,7 @@ public class FitAction extends BaseAction {
                 cmds.add("wkhtmltopdf - " + tempfile + " " + getOptions());
             } else if (getUrl() != null && getUrl().length() > 0) {
                 String t = getContext().getRequest().getQueryString();
-                if (t == null) {
+                if (t == null || t.contains("reportevent")) {
                     t = getUrl();
                 }
                 try {
@@ -80,6 +80,8 @@ public class FitAction extends BaseAction {
                 } catch (Exception e) {
                     log.error("Could not decode url", e);
                 }
+                log.info("Sending this url to wkhtmltopdf: " + t);
+                log.info("with these options: " + getOptions());
                 //cmds.add("wkhtmltopdf \"" + t + "\" - " +getOptions());
                 cmds.add("wkhtmltopdf \"" + t + "\" " + tempfile + " " + getOptions());
             } else {
