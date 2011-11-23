@@ -61,6 +61,10 @@ public class FitAction extends BaseAction {
         if(html_foot == null)html_foot = "</body></html>";
 
         try {
+            if(options.contains(";") || options.contains("&&")){
+                throw new RuntimeException("Options may contain hack attempt, check your options for ';' or '&&'");
+            }
+
             if (getHtml_inner() != null && getHtml_inner().length() > 0) {
                 //cmds.add("wkhtmltopdf - - " +getOptions()); //issues with streaming output
                 cmds.add("wkhtmltopdf - " + tempfile + " " + getOptions());
@@ -194,7 +198,7 @@ public class FitAction extends BaseAction {
      * @return the options
      */
     public String getOptions() {
-        return options;
+        return UrlDecoder.decode(options);
     }
 
     /**
