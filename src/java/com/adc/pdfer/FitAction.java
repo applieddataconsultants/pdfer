@@ -16,6 +16,7 @@ import java.io.OutputStreamWriter;
 import java.net.URLDecoder;
 import net.sourceforge.stripes.action.StreamingResolution;
 import java.util.ArrayList;
+import java.util.Date;
 import org.apache.log4j.Logger;
 
 /*
@@ -27,7 +28,7 @@ import org.apache.log4j.Logger;
 public class FitAction extends BaseAction {
 
     private static final Logger log = Logger.getLogger(FitAction.class);
-    String tempfile = "/tmp/temp.pdf";
+    
     private String url;
     private String html_head = "<html><head></head><body>";
     private String html_foot = "</body></html>";
@@ -40,7 +41,7 @@ public class FitAction extends BaseAction {
 
     @DefaultHandler
     public Resolution pdf() {
-
+        String tempfile = "/tmp/report_"+ String.valueOf(new Date().getTime()) +".pdf";
         /*
         JGoogleAnalyticsTracker tracker = new JGoogleAnalyticsTracker("pdfer", "UA-xxxxxx-x");
         FocusPoint focusPoint = new FocusPoint("fit");
