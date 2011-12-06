@@ -20,4 +20,12 @@
         <deploy url="http://172.25.20.114:8080/manager" username="tomcat" password="tomcat"
             path="/pdfer" war="file:${basedir}/dist/pdfer.war" update="true"/>
     </target>
+    <target name="adc-staging-deploy">
+        <antcall target="do-clean"/>
+        <antcall target="do-dist"/>
+        <taskdef name="deploy" classname="org.apache.catalina.ant.DeployTask"
+            classpath="${basedir}/lib/ant-depl/catalina-ant.jar"/>
+        <deploy url="http://172.25.16.73:8080/manager" username="tomcat" password="tomcat"
+            path="/pdfer" war="file:${basedir}/dist/pdfer.war" update="true"/>
+    </target>
 </project>

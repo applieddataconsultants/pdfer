@@ -25,4 +25,8 @@ wkhtmltopdf
 wget http://wkhtmltopdf.googlecode.com/files/wkhtmltopdf-0.9.9-static-amd64.tar.bz2
 tar -xf wkhtmltopdf-0.9.9-static-amd64.tar.bz2
 mv wkhtmltopdf-amd64 /bin/wkhtmltopdf
+
+wget http://wkhtmltopdf.googlecode.com/files/wkhtmltoimage-0.10.0_rc2-static-i386.tar.bz2
+tar -xf wkhtmltoimage-0.10.0_rc2-static-i386.tar.bz2 
+mv wkhtmltoimage-i386 /bin/wkhtmltoimage
 ```

@@ -12,19 +12,22 @@ Description
 
 Usage
     ~/fit?url=www.google.com
+    ~/image?url=www.google.com
 
 Parameters
     url - webpage URL
     html_inner - innerHTML, if present URL param is ignored
     html_head - (optional) defaults to &lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body&gt;
     html_foot - (optional) defaults to &lt;/body&gt;&lt;/html&gt;
-    file - (optional) output filename, defaults to "report.pdf"
+    file - (optional) output filename, defaults to "output"
     options - (optional) string of options supported by wkhtmltopdf
+    format - pdf|png defaults to pdf
 
 Example
     <a href="fit?url=www.google.com">fit?url=www.google.com</a>
         </pre>
   <a href="test.jsp">test page</a>
+
 
  <script type="text/javascript">
 var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");

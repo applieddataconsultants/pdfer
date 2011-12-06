@@ -34,32 +34,41 @@ public class FitAction extends BaseAction {
     private String html_foot = "</body></html>";
     private String html_inner;
     private String file = "report";
-    //0.9.9 options
-    //private String options = "--ignore-load-errors --disable-javascript";
-    //0.10.0rc1 options
+    private String format = "pdf"; //pdf|png
     private String options = "--encoding UTF-8";
 
     @DefaultHandler
     public Resolution pdf() {
-        String tempfile = "/tmp/report_"+ String.valueOf(new Date().getTime()) +".pdf";
-        /*
-        JGoogleAnalyticsTracker tracker = new JGoogleAnalyticsTracker("pdfer", "UA-xxxxxx-x");
-        FocusPoint focusPoint = new FocusPoint("fit");
-        tracker.trackAsynchronously(focusPoint);
-         */
+        String exe;
+        String mimetype;
+        String extension;
+        if(getFormat().equalsIgnoreCase("png")){
+            exe = "wkhtmltoimage";
+            mimetype = "image/png";
+            extension = "png";
+            if(options == null)options = "--javascript-delay 5000 --no-stop-slow-scripts";
+        }else{
+            exe = "wkhtmltopdf";
+            mimetype = "application/pdf";
+            extension = "pdf";
+            if(options == null)options = "--encoding UTF-8";
+        }
+
+        String tempfile = "/tmp/report_"+ String.valueOf(new Date().getTime()) +"."+extension;
+
         ArrayList<String> cmds = new ArrayList();
         cmds.add("/bin/sh");
         cmds.add("-c");
         Process p = null;
 
         log.debug("URL : " + url);
-        //log.debug("html_head : " + html_head);
+        log.debug("html_head : " + html_head);
         log.debug("html_inner : " + html_inner);
-        //log.debug("html_foot : " + html_foot);
+        log.debug("html_foot : " + html_foot);
 
-        if(options == null)options = "--encoding UTF-8";
         if(html_head == null)html_head = "<html><head></head><body>";
         if(html_foot == null)html_foot = "</body></html>";
+        if(file == null)file = "output";
 
         try {
             if(options.contains(";") || options.contains("&&")){
@@ -67,8 +76,8 @@ public class FitAction extends BaseAction {
             }
 
             if (getHtml_inner() != null && getHtml_inner().length() > 0) {
-                //cmds.add("wkhtmltopdf - - " +getOptions()); //issues with streaming output
-                cmds.add("wkhtmltopdf - " + tempfile + " " + getOptions());
+                cmds.add( exe  + " " + getOptions() + " - " + tempfile );
+                
             } else if (getUrl() != null && getUrl().length() > 0) {
                 String t = getContext().getRequest().getQueryString();
                 if (t == null || t.contains("reportevent")) {
@@ -83,8 +92,8 @@ public class FitAction extends BaseAction {
                 }
                 log.info("Sending this url to wkhtmltopdf: " + t);
                 log.info("with these options: " + getOptions());
-                //cmds.add("wkhtmltopdf \"" + t + "\" - " +getOptions());
-                cmds.add("wkhtmltopdf \"" + t + "\" " + tempfile + " " + getOptions());
+
+                cmds.add( exe + " " + getOptions() + " \"" + t + "\" " + tempfile );
             } else {
                 return new ForwardResolution("/index.html");
             }
@@ -95,7 +104,6 @@ public class FitAction extends BaseAction {
             for (String s : cmd) {
                 log.debug("CMD : " + s);
             }
-
 
             p = Runtime.getRuntime().exec(cmd);
 
@@ -123,17 +131,12 @@ public class FitAction extends BaseAction {
             }
             brCleanUp.close();
 
-            setFile(getFile().replaceAll(".pdf", ""));
-
             File tmpfile = new File(tempfile);
             InputStream is = new FileInputStream(tmpfile);
             tmpfile.delete();
-            return new StreamingResolution("application/pdf", is).setFilename(getFile() + ".pdf");
-
-            //return new StreamingResolution("application/pdf", p.getInputStream()).setFilename(file + ".pdf");
+            return new StreamingResolution(mimetype, is).setFilename(getFile() + "."+extension);
 
         } catch (IOException e) {
-            //e.printStackTrace();
             log.error(e.getMessage());
             return new ForwardResolution("/error.html");
         }
@@ -227,6 +230,21 @@ public class FitAction extends BaseAction {
      */
     public void setFile(String file) {
         this.file = file;
+    }
+    
+
+    /**
+     * @return the format
+     */
+    public String getFormat() {
+        return format;
+    }
+
+    /**
+     * @param format the format to set
+     */
+    public void setFormat(String format) {
+        this.format = format;
     }
     //</editor-fold>
 }
