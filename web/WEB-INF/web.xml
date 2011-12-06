@@ -49,6 +49,5 @@
     <servlet-mapping>
         <servlet-name>StripesDispatcher</servlet-name>
         <url-pattern>/fit</url-pattern>
-        <url-pattern>/image</url-pattern>
     </servlet-mapping>
 </web-app>
