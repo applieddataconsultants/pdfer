@@ -36,6 +36,8 @@ public class FitAction extends BaseAction {
     private String file = "report";
     private String format = "pdf"; //pdf|png
     private String options = "--encoding UTF-8";
+    private String errormessage = "";
+    private boolean debug = false;
 
     @DefaultHandler
     public Resolution pdf() {
@@ -79,12 +81,8 @@ public class FitAction extends BaseAction {
                 cmds.add( exe  + " " + getOptions() + " - " + tempfile );
                 
             } else if (getUrl() != null && getUrl().length() > 0) {
-                String t = getContext().getRequest().getQueryString();
-                if (t == null || t.contains("reportevent")) {
-                    t = getUrl();
-                }
+                String t = getUrl();
                 try {
-                    t = t.replaceFirst("url=", "");
                     t = URLDecoder.decode(t, "UTF-8");
                     t = t.replaceFirst("http://", "");
                 } catch (Exception e) {
@@ -103,6 +101,7 @@ public class FitAction extends BaseAction {
 
             for (String s : cmd) {
                 log.debug("CMD : " + s);
+                if(debug) errormessage += "\n\t"+ s;
             }
 
             p = Runtime.getRuntime().exec(cmd);
@@ -128,6 +127,7 @@ public class FitAction extends BaseAction {
             BufferedReader brCleanUp = new BufferedReader(new InputStreamReader(stderr));
             while ((line = brCleanUp.readLine()) != null) {
                 log.debug(line);
+                if(debug) errormessage += "\n\t"+ line;
             }
             brCleanUp.close();
 
@@ -138,7 +138,8 @@ public class FitAction extends BaseAction {
 
         } catch (IOException e) {
             log.error(e.getMessage());
-            return new ForwardResolution("/error.html");
+            errormessage += "\n\t"+ e.getMessage();
+            return new ForwardResolution("/error.jsp");
         }
 
     }
@@ -245,6 +246,35 @@ public class FitAction extends BaseAction {
      */
     public void setFormat(String format) {
         this.format = format;
+    }
+    
+
+    /**
+     * @return the errormessage
+     */
+    public String getErrormessage() {
+        return errormessage;
+    }
+
+    /**
+     * @param errormessage the errormessage to set
+     */
+    public void setErrormessage(String errormessage) {
+        this.errormessage = errormessage;
+    }
+
+    /**
+     * @return the debug
+     */
+    public boolean isDebug() {
+        return debug;
+    }
+
+    /**
+     * @param debug the debug to set
+     */
+    public void setDebug(boolean debug) {
+        this.debug = debug;
     }
     //</editor-fold>
 }

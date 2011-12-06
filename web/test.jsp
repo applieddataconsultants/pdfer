@@ -22,8 +22,9 @@
         html_inner:<br/><s:textarea name="html_inner" rows="20" cols="70"/><br/>
         html_foot:<br/><s:textarea name="html_foot" rows="10" cols="70"/><br/>
         options: <s:text name="options" size="60" value=""></s:text><br/>
-        --encoding UTF-8  (try this for PDF) <br/>
         --javascript-delay 5000 --no-stop-slow-scripts --crop-h 400 --crop-w 460 (for images) <br/>
+        debug: <input type="radio" name="debug" value="true"/>T <input type="radio" name="debug" value="false" checked="true"/>F
+        <br/>
         <s:submit name="submit">Submit</s:submit>
     </s:form>
     </body>
