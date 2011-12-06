@@ -11,8 +11,9 @@ pdf'er is a web service wrapper to [wkhtmltopdf](http://code.google.com/p/wkhtml
 - html_inner - innerHTML, if present URL param is ignored
 - html_head - (optional) defaults to &lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body&gt;
 - html_foot - (optional) defaults to &lt;/body&gt;&lt;/html&gt;
-- file - (optional) output filename, defaults to "report.pdf"
+- file - (optional) output filename, defaults to "output"
 - options - (optional) string of options supported by wkhtmltopdf
+- format - pdf|png defaults to pdf
 
 ## Usage
     ~/fit?url=www.google.com
